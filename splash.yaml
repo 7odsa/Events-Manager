@@ -1,0 +1,20 @@
+flutter_native_splash:
+
+  android: true
+  ios: true
+  web: false
+
+  color: "#d4e4ed"
+
+  image: images/evently_4.png
+  
+  # branding: images/evently_logo.png
+
+
+
+  android_12:
+
+    image: images/evently_4.png
+    color: "#ffffff"
+
+    # branding: images/evently_logo.png
