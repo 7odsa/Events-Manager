@@ -1,10 +1,10 @@
 import 'package:events_manager/screens/login_screen.dart';
+import 'package:events_manager/utils.dart';
 import 'package:flutter/material.dart';
 
-final seedColor = Color(0xff485EF7);
 final colorScheme = ColorScheme.fromSeed(
   seedColor: seedColor,
-  secondary: Color(0xffd4e4ed),
+  secondary: Color(0xffF2FEFF),
 );
 
 final lightTheme = ThemeData(
@@ -12,8 +12,12 @@ final lightTheme = ThemeData(
   colorScheme: colorScheme,
   useMaterial3: true,
   scaffoldBackgroundColor: colorScheme.secondary,
+  appBarTheme: AppBarTheme(backgroundColor: colorScheme.secondary),
   elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(seedColor)),
+    style: ElevatedButton.styleFrom(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      backgroundColor: seedColor,
+    ),
   ),
 );
 final darkTheme = lightTheme.copyWith(brightness: Brightness.dark);
