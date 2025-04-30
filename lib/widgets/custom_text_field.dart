@@ -27,7 +27,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   void initState() {
     isObsecure = widget.isPassword;
-    suffixIcon = widget.suffixIcon;
+    if (widget.isPassword)
+      suffixIcon = Icon(Icons.visibility_off);
+    else
+      suffixIcon = widget.suffixIcon;
+
     super.initState();
   }
 
@@ -61,9 +65,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 : widget.suffixIcon,
       ),
       obscureText: isObsecure,
-      onChanged: (value) {
-        print(widget.controller.value);
-      },
     );
   }
 }
