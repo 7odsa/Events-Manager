@@ -48,8 +48,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ? InkWell(
                   child:
                       (isObsecure)
-                          ? Icon(Icons.visibility_off)
-                          : Icon(Icons.visibility),
+                          ? Icon(Icons.visibility)
+                          : Icon(Icons.visibility_off),
                   onTap: () {
                     isObsecure = !isObsecure;
                     setState(() {});

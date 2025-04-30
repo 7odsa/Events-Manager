@@ -1,14 +1,10 @@
+import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
 
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
   final nameController = TextEditingController();
 
   final emailController = TextEditingController();
@@ -16,6 +12,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passwordController = TextEditingController();
 
   final rePasswordController = TextEditingController();
+
+  bool validate() {
+    // TODO
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 isPassword: true,
               ),
               SizedBox(height: 20),
+              createAccountButton(),
+              SizedBox(height: 20),
+              backToLogin(context),
             ],
           ),
         ),
@@ -78,6 +82,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
       isPassword: isPassword,
+    );
+  }
+
+  Widget backToLogin(BuildContext ctx) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("Already Have Account?  ", style: black20bold),
+        clickableText("Login", () {
+          Navigator.pop(ctx);
+        }),
+      ],
+    );
+  }
+
+  Widget clickableText(String text, void Function() onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Text(
+        text,
+        style: TextStyle(
+          decoration: TextDecoration.underline,
+          color: Colors.blue,
+          fontStyle: FontStyle.italic,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+
+  Widget createAccountButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: () {
+          // TODO
+          print(validate());
+        },
+        child: Text("Login", style: white20),
+      ),
     );
   }
 }
