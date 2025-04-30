@@ -27,7 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             children: [
               logoImage(),
-              SizedBox(height: 20),
+              SizedBox(height: 40),
               editText(
                 controller: nameController,
                 hintText: "Name",

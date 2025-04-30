@@ -23,14 +23,9 @@ class CustomTextField extends StatefulWidget {
 
 class _CustomTextFieldState extends State<CustomTextField> {
   late bool isObsecure;
-  late Icon? suffixIcon;
   @override
   void initState() {
     isObsecure = widget.isPassword;
-    if (widget.isPassword)
-      suffixIcon = Icon(Icons.visibility_off);
-    else
-      suffixIcon = widget.suffixIcon;
 
     super.initState();
   }
@@ -51,13 +46,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
         suffixIcon:
             (widget.isPassword)
                 ? InkWell(
-                  child: suffixIcon,
+                  child:
+                      (isObsecure)
+                          ? Icon(Icons.visibility_off)
+                          : Icon(Icons.visibility),
                   onTap: () {
-                    if (isObsecure) {
-                      suffixIcon = Icon(Icons.visibility_off);
-                    } else {
-                      suffixIcon = Icon(Icons.visibility);
-                    }
                     isObsecure = !isObsecure;
                     setState(() {});
                   },
