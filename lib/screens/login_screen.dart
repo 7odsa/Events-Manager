@@ -1,6 +1,5 @@
 import 'package:events_manager/main.dart';
 import 'package:events_manager/screens/register_screen.dart';
-import 'package:events_manager/services/auth_service.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
