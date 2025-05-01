@@ -124,6 +124,7 @@ class RegisterScreen extends StatelessWidget {
             email: emailController.text,
             password: passwordController.text,
           );
+
           print(validate());
         },
         child: Text("SignUp", style: white20),

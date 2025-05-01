@@ -1,5 +1,6 @@
 import 'package:events_manager/main.dart';
 import 'package:events_manager/screens/register_screen.dart';
+import 'package:events_manager/services/auth_service.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +132,10 @@ class _LoginScreenState extends State<LoginScreen> {
       height: 50,
       child: ElevatedButton(
         onPressed: () {
-          // TODO
+          AuthService.signin(
+            email: emailController.text,
+            password: passwordController.text,
+          );
           print(validate());
         },
         child: Text("Login", style: white20),
