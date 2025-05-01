@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "361353348856",
+    "project_id": "events-manager-f5341",
+    "storage_bucket": "events-manager-f5341.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361353348856:android:a37a085131f56037ef5d0d",
+        "android_client_info": {
+          "package_name": "com.example.events_manager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4WIeZcfA92-wHMgQTU0ynpLxZm5j7XPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

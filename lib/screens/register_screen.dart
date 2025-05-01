@@ -1,3 +1,4 @@
+import 'package:events_manager/services/auth_service.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -118,11 +119,14 @@ class RegisterScreen extends StatelessWidget {
       width: double.infinity,
       height: 50,
       child: ElevatedButton(
-        onPressed: () {
-          // TODO
+        onPressed: () async {
+          await AuthService.signup(
+            email: emailController.text,
+            password: passwordController.text,
+          );
           print(validate());
         },
-        child: Text("Login", style: white20),
+        child: Text("SignUp", style: white20),
       ),
     );
   }

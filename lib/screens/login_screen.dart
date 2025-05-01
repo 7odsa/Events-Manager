@@ -1,5 +1,6 @@
 import 'package:events_manager/main.dart';
 import 'package:events_manager/screens/register_screen.dart';
+import 'package:events_manager/services/auth_service.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final loginController = TextEditingController();
+  final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
 
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool validate() {
     // TODO
 
-    if (loginController.text.isEmpty || passwordController.text.isEmpty)
+    if (emailController.text.isEmpty || passwordController.text.isEmpty)
       return false;
     return true;
   }
@@ -44,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 logoImage(),
                 SizedBox(height: 60),
                 editText(
-                  loginController,
+                  emailController,
                   "Email",
                   Icon(Icons.email_rounded),
                   null,
