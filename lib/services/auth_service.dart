@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthService {
-  static Future<void> signup({
+  static Future<bool> signup({
     required String email,
     required String password,
   }) async {
@@ -35,6 +35,7 @@ class AuthService {
         fontSize: 14,
       );
       // SnackBar(content: Text(msg), duration: Duration(seconds: 2));
+      return false;
     } catch (e) {
       print("error :  " + e.toString());
       Fluttertoast.showToast(
@@ -45,12 +46,14 @@ class AuthService {
         textColor: Colors.white,
         fontSize: 14,
       );
+      return false;
     }
 
     // TODO save the user in the shared pref and navigate to home Page
+    return true;
   }
 
-  static Future<void> signin({
+  static Future<bool> signin({
     required String email,
     required String password,
   }) async {
@@ -80,6 +83,7 @@ class AuthService {
         fontSize: 14,
       );
       // SnackBar(content: Text(msg), duration: Duration(seconds: 2));
+      return false;
     } catch (e) {
       print("error :  " + e.toString());
       Fluttertoast.showToast(
@@ -90,9 +94,11 @@ class AuthService {
         textColor: Colors.white,
         fontSize: 14,
       );
+      return false;
     }
 
     // TODO save the user in the shared pref and navigate to home Page
+    return true;
   }
 
   // TODO: signout

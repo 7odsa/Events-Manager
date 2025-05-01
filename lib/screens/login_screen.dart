@@ -1,4 +1,5 @@
 import 'package:events_manager/main.dart';
+import 'package:events_manager/screens/home_screen.dart';
 import 'package:events_manager/screens/register_screen.dart';
 import 'package:events_manager/services/auth_service.dart';
 import 'package:events_manager/utils.dart';
@@ -131,11 +132,18 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       height: 50,
       child: ElevatedButton(
-        onPressed: () {
-          AuthService.signin(
+        onPressed: () async {
+          if (await AuthService.signin(
             email: emailController.text,
             password: passwordController.text,
-          );
+          )) {
+            if (mounted) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );
+            }
+          }
           print(validate());
         },
         child: Text("Login", style: white20),
