@@ -47,9 +47,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
             (widget.isPassword)
                 ? InkWell(
                   child:
-                      (isObsecure)
-                          ? Icon(Icons.visibility)
-                          : Icon(Icons.visibility_off),
+                      (widget.isPassword)
+                          ? (isObsecure)
+                              ? Icon(Icons.visibility)
+                              : Icon(Icons.visibility_off)
+                          : widget.suffixIcon,
                   onTap: () {
                     isObsecure = !isObsecure;
                     setState(() {});
