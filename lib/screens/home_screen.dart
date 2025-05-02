@@ -14,6 +14,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final List<CategoryDM> categoriesList;
   late CategoryDM selectedItem;
+
+  void onCategoryTap({required CategoryDM category}) {
+    // TODO: Here we should get the list of events based on the category
+    setState(() {
+      selectedItem = category;
+      print(selectedItem.categoryName);
+    });
+  }
+
   @override
   void initState() {
     categoriesList = CategoryDM.allCategoriesList();
@@ -28,11 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Column(
           children: [
             upperWidget(),
-            // TODO: Here we should get the list of events based on the category
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) => Text("data"),
-                itemCount: 50,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8,
+                ),
+                child: ListView.builder(
+                  itemBuilder: (context, index) => Text("data"),
+                  itemCount: 50,
+                ),
               ),
             ),
           ],
@@ -114,27 +128,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
               height: 34,
               child: ListView.separated(
                 separatorBuilder: (context, index) => SizedBox(width: 8),
                 scrollDirection: Axis.horizontal,
-                itemBuilder:
-                    (context, index) => CategoryItem(
-                      category: categoriesList[index],
-                      ontap: () {
-                        setState(() {
-                          selectedItem = categoriesList[index];
-                          print(selectedItem.categoryName);
-                        });
-                      },
-                      isSelected: categoriesList[index] == selectedItem,
-                    ),
+                itemBuilder: (context, index) {
+                  return CategoryItem(
+                    category: categoriesList[index],
+                    ontap: () {
+                      onCategoryTap(category: categoriesList[index]);
+                    },
+                    isSelected: categoriesList[index] == selectedItem,
+                  );
+                },
                 itemCount: categoriesList.length,
               ),
             ),
+            SizedBox(height: 8),
           ],
         ),
       ),
