@@ -11,3 +11,4 @@ final black20bold = TextStyle(
 );
 final black20 = TextStyle(fontSize: 20, color: Colors.black);
 final blue20 = TextStyle(fontSize: 20, color: seedColor);
+final blue20Bold = blue20.copyWith(fontWeight: FontWeight.bold);

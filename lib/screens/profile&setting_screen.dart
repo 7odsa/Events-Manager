@@ -10,7 +10,8 @@ class ProfileAndSettingScreen extends StatefulWidget {
 }
 
 class _ProfileAndSettingScreenState extends State<ProfileAndSettingScreen> {
-  String languageDDValue = 'One';
+  String languageDDValue = 'Arabic';
+  String themeDDValue = 'Light';
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,28 @@ class _ProfileAndSettingScreenState extends State<ProfileAndSettingScreen> {
                 SizedBox(height: 4),
                 themeLayer(),
               ],
+            ),
+          ),
+          Spacer(),
+          GestureDetector(
+            onTap: () {
+              // TODO
+              print("TestDelete");
+            },
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(16),
+              margin: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.redAccent,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.logout, size: 32, color: Colors.white),
+                  Text("Logout", style: white20),
+                ],
+              ),
             ),
           ),
         ],
@@ -64,22 +87,56 @@ class _ProfileAndSettingScreenState extends State<ProfileAndSettingScreen> {
   }
 
   Widget languageLayer() {
-    // return DropdownButton<String>(
-    //   value: languageDDValue,
-    //   items: [
-    //     DropdownMenuItem(value: 'one', child: Text(languageDDValue)),
-    //     DropdownMenuItem(value: 'two', child: Text('two')),
-    //     DropdownMenuItem(value: 'three', child: Text('three')),
-    //   ],
-    //   underline: Container(height: 2, color: Colors.white),
-    //   onChanged: (value) {
-    //     languageDDValue = value!;
-    //   },
-    // );
-    return Row();
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: seedColor, width: 2),
+      ),
+      child: DropdownButton<String>(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        style: blue20Bold,
+        isExpanded: true,
+        value: languageDDValue,
+        borderRadius: BorderRadius.circular(16),
+        items: [
+          DropdownMenuItem(value: 'Arabic', child: Text('Arabic')),
+          DropdownMenuItem(value: 'English', child: Text('English')),
+        ],
+        underline: SizedBox(),
+        onChanged: (value) {
+          languageDDValue = value!;
+          // TODO set it using provider
+          setState(() {});
+        },
+      ),
+    );
+    // return Row();
   }
 
   Widget themeLayer() {
-    return Row();
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: seedColor, width: 2),
+      ),
+      child: DropdownButton<String>(
+        borderRadius: BorderRadius.circular(16),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        style: blue20Bold,
+        elevation: 16,
+        isExpanded: true,
+        value: themeDDValue,
+        items: [
+          DropdownMenuItem(value: "Light", child: Text('Light')),
+          DropdownMenuItem(value: "Dark", child: Text('Dark')),
+        ],
+        underline: SizedBox(),
+        onChanged: (value) {
+          themeDDValue = value!;
+          // TODO set it using provider
+          setState(() {});
+        },
+      ),
+    );
   }
 }
