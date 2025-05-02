@@ -73,7 +73,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
       height: 60,
       child: ElevatedButton(
         onPressed: () {
-          // TODO
+          // TODO: add To fireBase DataBase and add to event provider
         },
         child: Text("Add Event", style: white20),
       ),

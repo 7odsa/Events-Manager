@@ -1,5 +1,6 @@
 import 'package:events_manager/main.dart';
 import 'package:events_manager/models/category.dart';
+import 'package:events_manager/models/event.dart';
 import 'package:events_manager/providers/event_provider.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
@@ -17,22 +18,33 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   late final List<CategoryDM> categoriesList;
+  late final List<Event> allEventsList;
+  late final List<Event> eventList;
   late CategoryDM selectedItem;
-
-  void onCategoryTap({required CategoryDM category}) {
-    // TODO: Here we should get the list of events based on the category
-    setState(() {
-      selectedItem = category;
-      print(selectedItem.categoryName);
-    });
-    ref.watch(eventProvider);
-  }
 
   @override
   void initState() {
     categoriesList = CategoryDM.allCategoriesList();
+    eventList = ref.watch(eventProvider);
+    allEventsList = eventList;
+
     selectedItem = categoriesList[0];
     super.initState();
+  }
+
+  void onCategoryTap({required CategoryDM category}) {
+    // TODO: Here we should get the list of events based on the category
+    // *        Nearly Done
+
+    selectedItem = category;
+    eventList =
+        (selectedItem == CategoryDM.all)
+            ? allEventsList
+            : allEventsList.where((e) => e.category == selectedItem).toList();
+    setState(() {
+      print(selectedItem.categoryName);
+    });
+    ref.watch(eventProvider);
   }
 
   @override
@@ -48,6 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 vertical: 8,
               ),
               child: ListView.builder(
+                // TODO: Replace With Event Item from from eventList
                 itemBuilder: (context, index) => Text("data"),
                 itemCount: 50,
               ),
@@ -137,27 +150,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ],
             ),
             SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              height: 34,
-              child: ListView.separated(
-                separatorBuilder: (context, index) => SizedBox(width: 8),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return CategoryItem(
-                    category: categoriesList[index],
-                    ontap: () {
-                      onCategoryTap(category: categoriesList[index]);
-                    },
-                    isSelected: categoriesList[index] == selectedItem,
-                  );
-                },
-                itemCount: categoriesList.length,
-              ),
-            ),
+            categoryList(),
             SizedBox(height: 8),
           ],
         ),
+      ),
+    );
+  }
+
+  SizedBox categoryList() {
+    return SizedBox(
+      width: double.infinity,
+      height: 34,
+      child: ListView.separated(
+        separatorBuilder: (context, index) => SizedBox(width: 8),
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return CategoryItem(
+            category: categoriesList[index],
+            ontap: () {
+              onCategoryTap(category: categoriesList[index]);
+            },
+            isSelected: categoriesList[index] == selectedItem,
+          );
+        },
+        itemCount: categoriesList.length,
       ),
     );
   }

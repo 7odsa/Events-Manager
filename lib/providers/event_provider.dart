@@ -10,4 +10,8 @@ class EventNotifier extends Notifier<List<Event>> {
   List<Event> build() {
     return [];
   }
+
+  Future<void> addEvent(Event event) async {
+    state = [event, ...state];
+  }
 }
