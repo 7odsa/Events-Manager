@@ -13,7 +13,7 @@ class Event {
   final String? description;
   final String date;
   final String time;
-  final Category category;
+  final CategoryDM category;
 
   // TODO: location
   // final Latlng location

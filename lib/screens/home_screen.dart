@@ -1,9 +1,25 @@
 import 'package:events_manager/main.dart';
+import 'package:events_manager/models/category.dart';
 import 'package:events_manager/utils.dart';
+import 'package:events_manager/widgets/category_item.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late final List<CategoryDM> categoriesList;
+  late CategoryDM selectedItem;
+  @override
+  void initState() {
+    categoriesList = CategoryDM.allCategoriesList();
+    selectedItem = categoriesList[0];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +28,7 @@ class HomeScreen extends StatelessWidget {
         body: Column(
           children: [
             upperWidget(),
+            // TODO: Here we should get the list of events based on the category
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index) => Text("data"),
@@ -38,12 +55,28 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Welcome Back", style: white20),
                     Text("John Safwat", style: white20),
+                    SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.location_on_outlined,
+                          color: colorScheme.primaryContainer,
+                        ),
+                        SizedBox(width: 4),
+                        Text("data", style: white20),
+                        SizedBox(width: 4),
+                        Text(",data", style: white20),
+                      ],
+                    ),
                   ],
                 ),
                 Row(
@@ -84,8 +117,23 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
-              height: 50,
-              child: TabBar(tabs: [], isScrollable: true),
+              height: 34,
+              child: ListView.separated(
+                separatorBuilder: (context, index) => SizedBox(width: 8),
+                scrollDirection: Axis.horizontal,
+                itemBuilder:
+                    (context, index) => CategoryItem(
+                      category: categoriesList[index],
+                      ontap: () {
+                        setState(() {
+                          selectedItem = categoriesList[index];
+                          print(selectedItem.categoryName);
+                        });
+                      },
+                      isSelected: categoriesList[index] == selectedItem,
+                    ),
+                itemCount: categoriesList.length,
+              ),
             ),
           ],
         ),
