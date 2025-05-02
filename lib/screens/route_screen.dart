@@ -1,3 +1,5 @@
+import 'package:events_manager/models/category.dart';
+import 'package:events_manager/screens/create_event_screen.dart';
 import 'package:events_manager/screens/home_screen.dart';
 import 'package:events_manager/screens/login_screen.dart';
 import 'package:events_manager/utils.dart';
@@ -39,7 +41,15 @@ class _RouteScreenState extends State<RouteScreen> {
           splashColor: Colors.red,
           shape: CircleBorder(side: BorderSide(color: Colors.white, width: 4)),
           onPressed: () {
-            //  TODO
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) => CreateEventScreen(
+                      categories: CategoryDM.allCategoriesList().sublist(1),
+                    ),
+              ),
+            );
           },
           child: Icon(Icons.add, color: Colors.white, size: 40),
         ),

@@ -9,4 +9,5 @@ final black20bold = TextStyle(
   color: Colors.black,
   fontWeight: FontWeight.bold,
 );
+final black20 = TextStyle(fontSize: 20, color: Colors.black);
 final blue20 = TextStyle(fontSize: 20, color: seedColor);

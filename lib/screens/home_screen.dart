@@ -1,17 +1,21 @@
 import 'package:events_manager/main.dart';
 import 'package:events_manager/models/category.dart';
+import 'package:events_manager/providers/event_provider.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() {
+    return _HomeScreenState();
+  }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   late final List<CategoryDM> categoriesList;
   late CategoryDM selectedItem;
 
@@ -21,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       selectedItem = category;
       print(selectedItem.categoryName);
     });
+    ref.watch(eventProvider);
   }
 
   @override
@@ -32,25 +37,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            upperWidget(),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8,
-                ),
-                child: ListView.builder(
-                  itemBuilder: (context, index) => Text("data"),
-                  itemCount: 50,
-                ),
+    return Scaffold(
+      body: Column(
+        children: [
+          upperWidget(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8,
+              ),
+              child: ListView.builder(
+                itemBuilder: (context, index) => Text("data"),
+                itemCount: 50,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -65,7 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(
+          left: 16,
+          right: 16,
+          bottom: 16,
+          top: 32,
+        ),
         child: Column(
           children: [
             Row(
