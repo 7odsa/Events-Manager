@@ -4,6 +4,7 @@ import 'package:events_manager/screens/create_event_screen.dart';
 import 'package:events_manager/screens/favorite_events_screen.dart';
 import 'package:events_manager/screens/home_screen.dart';
 import 'package:events_manager/screens/login_screen.dart';
+import 'package:events_manager/screens/profile&setting_screen.dart';
 import 'package:events_manager/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class _RouteScreenState extends State<RouteScreen> {
     HomeScreen(),
     LoginScreen(),
     FavoriteEventsScreen(),
-    HomeScreen(),
+    ProfileAndSettingScreen(),
   ];
   late Widget selectedItem;
   IconData? selectedIcon;
