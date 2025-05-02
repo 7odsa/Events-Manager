@@ -1,3 +1,4 @@
+import 'package:events_manager/main.dart';
 import 'package:events_manager/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -6,17 +7,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          upperWidget(),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) => Text("data"),
-              itemCount: 50,
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            upperWidget(),
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) => Text("data"),
+                itemCount: 50,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -43,17 +46,46 @@ class HomeScreen extends StatelessWidget {
                     Text("John Safwat", style: white20),
                   ],
                 ),
-                Text("En", style: white20),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        // TODO
+                      },
+                      icon: Icon(
+                        Icons.sunny,
+                        color: colorScheme.primaryContainer,
+                        size: 28,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    InkWell(
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "EN",
+                          style: blue20.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      onTap: () {
+                        // TODO
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
+            SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               height: 50,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => Text("data"),
-                itemCount: 30,
-              ),
+              child: TabBar(tabs: [], isScrollable: true),
             ),
           ],
         ),
