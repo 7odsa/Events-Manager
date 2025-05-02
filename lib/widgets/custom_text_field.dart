@@ -10,6 +10,7 @@ class CustomTextField extends StatefulWidget {
     this.suffixIcon,
     required this.isPassword,
     this.maxLines = 1,
+    this.onChanged,
   });
 
   final TextEditingController controller;
@@ -18,6 +19,7 @@ class CustomTextField extends StatefulWidget {
   final Icon? suffixIcon;
   final bool isPassword;
   final int maxLines;
+  final void Function(String)? onChanged;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -35,6 +37,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: widget.onChanged,
       maxLines: widget.maxLines,
       controller: widget.controller,
       decoration: InputDecoration(

@@ -1,5 +1,7 @@
 import 'package:events_manager/models/category.dart';
+import 'package:events_manager/providers/favorite_events_provider.dart';
 import 'package:events_manager/screens/create_event_screen.dart';
+import 'package:events_manager/screens/favorite_events_screen.dart';
 import 'package:events_manager/screens/home_screen.dart';
 import 'package:events_manager/screens/login_screen.dart';
 import 'package:events_manager/utils.dart';
@@ -18,7 +20,7 @@ class _RouteScreenState extends State<RouteScreen> {
   final List<Widget> screensList = [
     HomeScreen(),
     LoginScreen(),
-    HomeScreen(),
+    FavoriteEventsScreen(),
     HomeScreen(),
   ];
   late Widget selectedItem;

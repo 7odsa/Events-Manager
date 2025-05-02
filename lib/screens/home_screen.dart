@@ -4,6 +4,7 @@ import 'package:events_manager/models/event.dart';
 import 'package:events_manager/providers/event_provider.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
+import 'package:events_manager/widgets/events_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,17 +20,23 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   late final List<CategoryDM> categoriesList;
   late final List<Event> allEventsList;
-  late final List<Event> eventList;
+  late List<Event> eventList;
   late CategoryDM selectedItem;
 
   @override
   void initState() {
     categoriesList = CategoryDM.allCategoriesList();
-    eventList = ref.watch(eventProvider);
-    allEventsList = eventList;
 
     selectedItem = categoriesList[0];
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    allEventsList = ref.watch(eventProvider);
+    eventList = allEventsList;
   }
 
   void onCategoryTap({required CategoryDM category}) {
@@ -53,19 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: Column(
         children: [
           upperWidget(),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8,
-              ),
-              child: ListView.builder(
-                // TODO: Replace With Event Item from from eventList
-                itemBuilder: (context, index) => Text("data"),
-                itemCount: 50,
-              ),
-            ),
-          ),
+          Expanded(child: EventsListWidget(eventList: eventList)),
         ],
       ),
     );
