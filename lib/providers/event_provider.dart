@@ -11,7 +11,10 @@ class EventNotifier extends Notifier<List<Event>> {
     return [];
   }
 
-  Future<void> addEvent(Event event) async {
+  Future<bool> addEvent(Event event) async {
+    // TODO: add event to firebase
+
     state = [event, ...state];
+    return true;
   }
 }

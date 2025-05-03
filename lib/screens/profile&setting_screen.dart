@@ -45,7 +45,7 @@ class _ProfileAndSettingScreenState extends State<ProfileAndSettingScreen> {
             child: Container(
               width: double.infinity,
               padding: EdgeInsets.all(16),
-              margin: EdgeInsets.all(16),
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 34),
               decoration: BoxDecoration(
                 color: Colors.redAccent,
                 borderRadius: BorderRadius.circular(16),

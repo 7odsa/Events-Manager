@@ -21,6 +21,7 @@ class _RouteScreenState extends State<RouteScreen> {
   final List<Widget> screensList = [
     HomeScreen(),
     LoginScreen(),
+    // TODO: creating map screen
     FavoriteEventsScreen(),
     ProfileAndSettingScreen(),
   ];

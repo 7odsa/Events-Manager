@@ -62,6 +62,8 @@ class CategoryDM {
     icon: Icons.add_business,
   );
 
+  get state => null;
+
   static List<CategoryDM> allCategoriesList() {
     return [
       all,

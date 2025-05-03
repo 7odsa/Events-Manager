@@ -1,19 +1,21 @@
-import 'package:events_manager/main.dart';
 import 'package:events_manager/models/category.dart';
+import 'package:events_manager/models/event.dart';
+import 'package:events_manager/providers/event_provider.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
 import 'package:events_manager/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateEventScreen extends StatefulWidget {
+class CreateEventScreen extends ConsumerStatefulWidget {
   const CreateEventScreen({super.key, required this.categories});
   final List<CategoryDM> categories;
 
   @override
-  State<CreateEventScreen> createState() => _CreateEventScreenState();
+  ConsumerState<CreateEventScreen> createState() => _CreateEventScreenState();
 }
 
-class _CreateEventScreenState extends State<CreateEventScreen> {
+class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
   late CategoryDM selectedCategory;
   double screenWidth = 0;
   final TextEditingController titleController = TextEditingController();
@@ -72,8 +74,20 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
       width: double.infinity,
       height: 60,
       child: ElevatedButton(
-        onPressed: () {
-          // TODO: add To fireBase DataBase and add to event provider
+        onPressed: () async {
+          if (await ref
+              .read(eventProvider.notifier)
+              .addEvent(
+                Event(
+                  title: titleController.text,
+                  description: descriptionController.text,
+                  date: "111",
+                  time: "time",
+                  category: selectedCategory,
+                ),
+              )) {
+            if (mounted) Navigator.pop(context);
+          }
         },
         child: Text("Add Event", style: white20),
       ),

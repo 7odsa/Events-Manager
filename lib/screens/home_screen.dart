@@ -1,7 +1,7 @@
 import 'package:events_manager/main.dart';
 import 'package:events_manager/models/category.dart';
 import 'package:events_manager/models/event.dart';
-import 'package:events_manager/providers/event_provider.dart';
+import 'package:events_manager/providers/intended_event_provider.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
 import 'package:events_manager/widgets/events_list_widget.dart';
@@ -19,43 +19,25 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   late final List<CategoryDM> categoriesList;
-  late final List<Event> allEventsList;
-  late List<Event> eventList;
-  late CategoryDM selectedItem;
 
   @override
   void initState() {
     categoriesList = CategoryDM.allCategoriesList();
 
-    selectedItem = categoriesList[0];
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    allEventsList = ref.watch(eventProvider);
-    eventList = allEventsList;
   }
 
   void onCategoryTap({required CategoryDM category}) {
     // TODO: Here we should get the list of events based on the category
     // *        Nearly Done
 
-    selectedItem = category;
-    eventList =
-        (selectedItem == CategoryDM.all)
-            ? allEventsList
-            : allEventsList.where((e) => e.category == selectedItem).toList();
-    setState(() {
-      print(selectedItem.categoryName);
-    });
-    ref.watch(eventProvider);
+    ref.read(selectedCategoryProvider.notifier).state = category;
   }
 
   @override
   Widget build(BuildContext context) {
+    final List<Event> eventList = ref.watch(filteredEventsProvider);
+
     return Scaffold(
       body: Column(
         children: [
@@ -154,6 +136,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   SizedBox categoryList() {
+    final selectedCategory = ref.watch(selectedCategoryProvider);
+
     return SizedBox(
       width: double.infinity,
       height: 34,
@@ -166,7 +150,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ontap: () {
               onCategoryTap(category: categoriesList[index]);
             },
-            isSelected: categoriesList[index] == selectedItem,
+            isSelected: categoriesList[index] == selectedCategory,
           );
         },
         itemCount: categoriesList.length,

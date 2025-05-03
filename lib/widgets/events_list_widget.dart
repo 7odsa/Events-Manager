@@ -12,8 +12,15 @@ class EventsListWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: ListView.builder(
         // TODO: Replace With Event Item from from eventList
-        itemBuilder: (context, index) => Text("data"),
-        itemCount: 50,
+        itemBuilder:
+            (context, index) => Row(
+              children: [
+                Text(eventList[index].title),
+                Spacer(),
+                Text(eventList[index].category.categoryName),
+              ],
+            ),
+        itemCount: eventList.length,
       ),
     );
   }
