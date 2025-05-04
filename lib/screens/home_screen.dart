@@ -3,6 +3,7 @@ import 'package:events_manager/models/category.dart';
 import 'package:events_manager/models/event.dart';
 import 'package:events_manager/models/user_dm.dart';
 import 'package:events_manager/providers/filteredEventsProvider.dart';
+import 'package:events_manager/services/firestore_helpers.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
 import 'package:events_manager/widgets/events_list_widget.dart';
@@ -27,21 +28,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void onCategoryTap({required CategoryDM category}) {
-    // TODO: Here we should get the list of events based on the category
-    // *        Nearly Done
-
     ref.read(selectedCategoryProvider.notifier).state = category;
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Event> eventList = ref.watch(filteredEventsProvider);
-
     return Scaffold(
       body: Column(
         children: [
           upperWidget(),
-          Expanded(child: EventsListWidget(eventList: eventList)),
+          Expanded(
+            child: StreamBuilder(
+              //  ! Still Not Working Yet
+              stream: getAllEvents(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return EventsListWidget(eventList: snapshot.data!);
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          ),
         ],
       ),
     );

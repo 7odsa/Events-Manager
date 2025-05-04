@@ -1,11 +1,14 @@
 import 'package:events_manager/models/category.dart';
 import 'package:events_manager/models/event.dart';
+import 'package:events_manager/models/user_dm.dart';
 import 'package:events_manager/providers/event_provider.dart';
+import 'package:events_manager/services/firestore_helpers.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
 import 'package:events_manager/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:latlong2/latlong.dart';
 
 class CreateEventScreen extends ConsumerStatefulWidget {
   const CreateEventScreen({super.key, required this.categories});
@@ -21,6 +24,7 @@ class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
   final TextEditingController descriptionController = TextEditingController();
   TimeOfDay? time;
   DateTime? date;
+  LatLng? location;
 
   @override
   void initState() {
@@ -76,20 +80,28 @@ class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
       height: 60,
       child: ElevatedButton(
         onPressed: () async {
-          if (await ref
-              .read(eventProvider.notifier)
-              .addEvent(
-                Event(
-                  title: titleController.text,
-                  description: descriptionController.text,
-                  date: DateTime.now(),
-                  category: selectedCategory,
-                  lat: "",
-                  lng: "",
-                ),
-              )) {
-            if (mounted) Navigator.pop(context);
+          if (titleController.text.isEmpty ||
+              descriptionController.text.isEmpty ||
+              date == null ||
+              time == null
+          // TODO: When the logic is done
+          //  || location == null
+          ) {
+            return;
           }
+          date = date!.copyWith(hour: time!.hour, minute: time!.minute);
+          await addNewEvent(
+            Event(
+              title: titleController.text,
+              description: descriptionController.text,
+              date: date!,
+              category: selectedCategory,
+              location: location,
+              createdBy: UserDM.currentUser!.id!,
+            ),
+          );
+
+          if (mounted) Navigator.pop(context);
         },
         child: Text("Add Event", style: white20),
       ),
