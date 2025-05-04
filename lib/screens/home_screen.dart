@@ -1,6 +1,7 @@
 import 'package:events_manager/main.dart';
 import 'package:events_manager/models/category.dart';
 import 'package:events_manager/models/event.dart';
+import 'package:events_manager/models/user_dm.dart';
 import 'package:events_manager/providers/filteredEventsProvider.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
@@ -72,7 +73,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Welcome Back", style: white20),
-                    Text("John Safwat", style: white20),
+                    Text(UserDM.currentUser!.name, style: white20),
                     SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -82,6 +83,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           color: colorScheme.primaryContainer,
                         ),
                         SizedBox(width: 4),
+                        // TODO
                         Text("data", style: white20),
                         SizedBox(width: 4),
                         Text(",data", style: white20),

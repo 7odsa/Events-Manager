@@ -1,4 +1,5 @@
 import 'package:events_manager/screens/home_screen.dart';
+import 'package:events_manager/screens/route_screen.dart';
 import 'package:events_manager/services/auth_service.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/custom_text_field.dart';
@@ -131,7 +132,7 @@ class RegisterScreen extends StatelessWidget {
                 ctx,
                 MaterialPageRoute(
                   builder: (context) {
-                    return HomeScreen();
+                    return RouteScreen();
                   },
                 ),
               );

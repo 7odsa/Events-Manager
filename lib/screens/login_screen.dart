@@ -1,6 +1,7 @@
 import 'package:events_manager/main.dart';
 import 'package:events_manager/screens/home_screen.dart';
 import 'package:events_manager/screens/register_screen.dart';
+import 'package:events_manager/screens/route_screen.dart';
 import 'package:events_manager/services/auth_service.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/custom_text_field.dart';
@@ -140,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
             if (mounted) {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => HomeScreen()),
+                MaterialPageRoute(builder: (context) => RouteScreen()),
               );
             }
           }

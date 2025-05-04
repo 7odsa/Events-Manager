@@ -17,9 +17,10 @@ class CreateEventScreen extends ConsumerStatefulWidget {
 
 class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
   late CategoryDM selectedCategory;
-  double screenWidth = 0;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  TimeOfDay? time;
+  DateTime? date;
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text("Create Event", style: blue20),
@@ -81,9 +82,10 @@ class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
                 Event(
                   title: titleController.text,
                   description: descriptionController.text,
-                  date: "111",
-                  time: "time",
+                  date: DateTime.now(),
                   category: selectedCategory,
+                  lat: "",
+                  lng: "",
                 ),
               )) {
             if (mounted) Navigator.pop(context);
@@ -107,7 +109,7 @@ class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
 
   InkWell locationLayer() {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         // TODO
       },
       child: Container(
@@ -150,10 +152,23 @@ class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
         Text("Event Date", style: black20),
         Spacer(),
         InkWell(
-          onTap: () {
-            // TODO
+          onTap: () async {
+            date =
+                await showDatePicker(
+                  context: context,
+                  initialDate: date,
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime.now().add(Duration(days: 365)),
+                ) ??
+                date;
+            setState(() {});
           },
-          child: Text("Choose Date", style: blue20),
+          child: Text(
+            (date != null)
+                ? "${date!.year}:${date!.month < 10 ? "0${date!.month}" : date!.month}:${date!.day}"
+                : "Choose Date",
+            style: blue20,
+          ),
         ),
       ],
     );
@@ -167,10 +182,19 @@ class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
         Text("Event Time", style: black20),
         Spacer(),
         InkWell(
-          onTap: () {
-            // TODO
+          onTap: () async {
+            time =
+                await showTimePicker(
+                  context: context,
+                  initialTime: time ?? TimeOfDay.now(),
+                ) ??
+                time;
+            setState(() {});
           },
-          child: Text("Choose Time", style: blue20),
+          child: Text(
+            time != null ? time!.format(context) : "Choose Time",
+            style: blue20,
+          ),
         ),
       ],
     );

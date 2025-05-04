@@ -5,16 +5,16 @@ class Event {
     required this.title,
     required this.description,
     required this.date,
-    required this.time,
     required this.category,
+    required this.lat,
+    required this.lng,
   });
 
   final String title;
   final String? description;
-  final String date;
-  final String time;
-  final CategoryDM category;
+  final DateTime date;
 
-  // TODO: location
-  // final Latlng location
+  final CategoryDM category;
+  final String lat;
+  final String lng;
 }
