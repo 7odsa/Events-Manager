@@ -1,3 +1,4 @@
+import 'package:events_manager/screens/login_screen.dart';
 import 'package:events_manager/screens/route_screen.dart';
 import 'package:events_manager/utils.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class MainApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
-      home: RouteScreen(),
+      home: LoginScreen(),
       // home: LoginScreen(),
     );
   }

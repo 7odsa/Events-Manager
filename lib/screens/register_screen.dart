@@ -124,6 +124,7 @@ class RegisterScreen extends StatelessWidget {
           if (await AuthService.signup(
             email: emailController.text,
             password: passwordController.text,
+            name: nameController.text,
           )) {
             if (ctx.mounted) {
               Navigator.pushReplacement(

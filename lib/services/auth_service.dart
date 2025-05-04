@@ -1,3 +1,5 @@
+import 'package:events_manager/models/user_dm.dart';
+import 'package:events_manager/services/firestore_helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,11 +8,18 @@ class AuthService {
   static Future<bool> signup({
     required String email,
     required String password,
+    required String name,
   }) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+      var credintial = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      addNewUser(
+        user: UserDM(
+          id: credintial.user!.uid,
+          email: email,
+          name: name,
+          favoriteEvents: [],
+        ),
       );
     } on FirebaseAuthException catch (e) {
       String msg = 'Error';
@@ -49,7 +58,6 @@ class AuthService {
       return false;
     }
 
-    // TODO save the user in the shared pref and navigate to home Page
     return true;
   }
 
@@ -58,10 +66,12 @@ class AuthService {
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      var credintial = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      // TODO get the user from fireStore Using his password from the credintial and then store it in the User.currentUser
     } on FirebaseAuthException catch (e) {
       String msg = 'Error';
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
@@ -102,4 +112,7 @@ class AuthService {
   }
 
   // TODO: signout
+  static Future<bool> logOut() async {
+    return false;
+  }
 }
