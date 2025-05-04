@@ -1,7 +1,7 @@
 import 'package:events_manager/main.dart';
 import 'package:events_manager/models/category.dart';
 import 'package:events_manager/models/event.dart';
-import 'package:events_manager/providers/intended_event_provider.dart';
+import 'package:events_manager/providers/filteredEventsProvider.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
 import 'package:events_manager/widgets/events_list_widget.dart';
@@ -18,12 +18,10 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  late final List<CategoryDM> categoriesList;
+  final List<CategoryDM> categoriesList = CategoryDM.allCategoriesList();
 
   @override
   void initState() {
-    categoriesList = CategoryDM.allCategoriesList();
-
     super.initState();
   }
 
