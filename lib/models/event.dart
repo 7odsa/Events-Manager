@@ -25,7 +25,9 @@ class Event {
   Event.fromJson(Map<String, dynamic> json) {
     title = json["title"];
     description = json["description"];
-    date = json["date"];
+
+    final Timestamp timestamp = json["date"];
+    date = timestamp.toDate();
 
     final double lat = json["lat"];
     final double lng = json["lng"];
@@ -36,7 +38,7 @@ class Event {
     );
     category = categoryList;
 
-    final List<dynamic> ids = json["title"];
+    final List<dynamic> ids = json["favoritesUsersIds"];
     favoritesUsersIds = ids.map((e) => e.toString()).toList();
     createdBy = json["createdBy"];
   }

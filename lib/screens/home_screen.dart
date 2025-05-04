@@ -39,14 +39,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           upperWidget(),
           Expanded(
             child: StreamBuilder(
-              //  ! Still Not Working Yet
               stream: getAllEvents(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return EventsListWidget(eventList: snapshot.data!);
-                } else {
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+                if (!snapshot.hasData) {
                   return Center(child: CircularProgressIndicator());
                 }
+                return EventsListWidget(eventList: snapshot.data ?? []);
               },
             ),
           ),

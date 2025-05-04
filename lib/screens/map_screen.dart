@@ -51,34 +51,22 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: onBackButtonPressed,
-          ),
-          centerTitle: true,
-          title: Text(widget.isSelecting ? "Pick a Location" : "Your Location"),
-        ),
-        body: FutureBuilder(
-          future: getCurrentLocation(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return MapWidget(
-                pickedLocation: _chosedLocation,
-                isSelecting: true,
-                onTap: _onMapTapped,
-                onbackToCurrentLocationPressed: (newPoint) {
-                  _chosedLocation = newPoint;
-                },
-              );
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
-      ),
+    return FutureBuilder(
+      future: getCurrentLocation(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MapWidget(
+            pickedLocation: _chosedLocation,
+            isSelecting: true,
+            onTap: _onMapTapped,
+            onbackToCurrentLocationPressed: (newPoint) {
+              _chosedLocation = newPoint;
+            },
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 
