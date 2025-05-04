@@ -4,16 +4,27 @@ import 'package:events_manager/models/user_dm.dart';
 
 Future<void> addNewUser({required UserDM user}) async {
   var db = FirebaseFirestore.instance;
+
   var collectionRef = db.collection("users");
+
   var docRef = await collectionRef.doc(user.id);
+
   docRef.set(user.toJson());
 
   UserDM.currentUser = user;
-  print(docRef.id);
-  print(docRef.parent.parameters);
 }
 
-Future<void> getUser(String id) async {}
+Future<void> getUser(String id) async {
+  var db = FirebaseFirestore.instance;
+
+  var collectionRef = db.collection("users");
+
+  var docRef = collectionRef.doc(id);
+
+  var data = await docRef.get();
+
+  UserDM.currentUser = UserDM.fromJson(id: id, data: data.data()!);
+}
 
 Future<void> addNewEvent(Event event) async {}
 

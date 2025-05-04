@@ -13,7 +13,7 @@ class AuthService {
     try {
       var credintial = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      addNewUser(
+      await addNewUser(
         user: UserDM(
           id: credintial.user!.uid,
           email: email,
@@ -70,8 +70,7 @@ class AuthService {
         email: email,
         password: password,
       );
-
-      // TODO get the user from fireStore Using his password from the credintial and then store it in the User.currentUser
+      await getUser(credintial.user!.uid);
     } on FirebaseAuthException catch (e) {
       String msg = 'Error';
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
@@ -107,7 +106,6 @@ class AuthService {
       return false;
     }
 
-    // TODO save the user in the shared pref and navigate to home Page
     return true;
   }
 

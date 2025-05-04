@@ -12,7 +12,8 @@ class UserDM {
   }) {
     email = data["email"];
     name = data["name"];
-    favoriteEvents = data["favoriteEvents"];
+    List<dynamic> ids = data["favoriteEvents"];
+    favoriteEvents = ids.map((e) => e.toString()).toList();
   }
 
   late final String? id;
