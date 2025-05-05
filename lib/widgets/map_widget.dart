@@ -13,8 +13,9 @@ class MapWidget extends StatefulWidget {
     this.onTap,
     required this.isSelecting,
     this.onbackToCurrentLocationPressed,
+    this.eventsLocation,
   });
-
+  final List<LatLng?>? eventsLocation;
   final LatLng pickedLocation;
   final void Function(TapPosition, LatLng)? onTap;
   final void Function(LatLng)? onbackToCurrentLocationPressed;
@@ -73,29 +74,22 @@ class _MapWidgetState extends State<MapWidget> {
             ),
             MarkerLayer(
               rotate: true,
-              markers: [
-                Marker(
-                  point: _chosedLocation,
-                  child: const Icon(
-                    Icons.location_on,
-                    size: 35,
-                    color: Colors.blue,
-                  ),
-                ),
-              ],
+              markers:
+                  widget.eventsLocation
+                      ?.map(
+                        (e) => Marker(
+                          point: e!,
+                          child: const Icon(
+                            Icons.location_on,
+                            size: 35,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      )
+                      .toList() ??
+                  [],
             ),
-            // :
-            // I decided to not use a marker because the marker has on click and change it's location
-            // whenever i clicked on the map and i wanna this map to be for previewing only
-            // and not for interacting with so instead i chosed to use a regular icon and center it
-            // Align(
-            //   alignment: Alignment.center,
-            //   child: const Icon(
-            //     Icons.location_on,
-            //     size: 35,
-            //     color: Colors.blue,
-            //   ),
-            // ),
+
             if (widget.isSelecting)
               Align(
                 alignment: Alignment.bottomRight,

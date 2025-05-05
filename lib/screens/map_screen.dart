@@ -1,3 +1,4 @@
+import 'package:events_manager/models/user_dm.dart';
 import 'package:events_manager/services/firestore_helpers.dart';
 import 'package:events_manager/widgets/map_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,38 +17,9 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  late LatLng _chosedLocation;
-
   @override
   void initState() {
     super.initState();
-  }
-
-  Future<void> getCurrentLocation() async {
-    Location location = new Location();
-
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _locationData = await location.getLocation();
-    _chosedLocation = LatLng(_locationData.latitude!, _locationData.longitude!);
   }
 
   @override
@@ -57,12 +29,11 @@ class _MapScreenState extends State<MapScreen> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return MapWidget(
-            pickedLocation: _chosedLocation,
-            isSelecting: true,
+            pickedLocation:
+                UserDM.currentUser!.currentLocation ?? LatLng(50, 50),
+            isSelecting: false,
             onTap: _onMapTapped,
-            onbackToCurrentLocationPressed: (newPoint) {
-              _chosedLocation = newPoint;
-            },
+            eventsLocation: snapshot.data!.map((e) => e.location).toList(),
           );
         } else {
           return Center(child: CircularProgressIndicator());
