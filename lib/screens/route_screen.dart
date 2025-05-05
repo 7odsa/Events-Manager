@@ -1,3 +1,4 @@
+import 'package:events_manager/functions/func.dart';
 import 'package:events_manager/models/category.dart';
 import 'package:events_manager/screens/create_event_screen.dart';
 import 'package:events_manager/screens/favorite_events_screen.dart';

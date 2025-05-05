@@ -21,11 +21,6 @@ class _FavoriteEventsScreenState extends ConsumerState<FavoriteEventsScreen> {
   final TextEditingController searchController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(

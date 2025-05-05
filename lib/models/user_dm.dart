@@ -1,3 +1,5 @@
+import 'package:latlong2/latlong.dart';
+
 class UserDM {
   static UserDM? currentUser;
   UserDM({
@@ -20,6 +22,9 @@ class UserDM {
   late final String email;
   late final String name;
   late final List<String> favoriteEvents;
+  LatLng? currentLocation;
+  String? areaName;
+  String? countryName;
 
   Map<String, dynamic> toJson() {
     return {"email": email, "name": name, "favoriteEvents": favoriteEvents};

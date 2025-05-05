@@ -1,7 +1,12 @@
+import 'package:events_manager/models/user_dm.dart';
+import 'package:geocoding/geocoding.dart' as geo;
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
-Future<void> getCurrentLocation() async {
-  Location location = new Location();
+Future<void> getCurrentLocation({
+  required void Function()? onLocationRetrieved,
+}) async {
+  Location location = Location();
 
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
@@ -24,4 +29,18 @@ Future<void> getCurrentLocation() async {
   }
 
   _locationData = await location.getLocation();
+
+  List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(
+    _locationData.latitude!,
+    _locationData.longitude!,
+  );
+  UserDM.currentUser!.currentLocation = LatLng(
+    _locationData.latitude!,
+    _locationData.longitude!,
+  );
+
+  UserDM.currentUser!.countryName = placemarks[0].country!;
+  UserDM.currentUser!.areaName = placemarks[0].administrativeArea!;
+
+  onLocationRetrieved?.call();
 }

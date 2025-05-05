@@ -1,3 +1,4 @@
+import 'package:events_manager/services/firestore_helpers.dart';
 import 'package:events_manager/widgets/map_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getCurrentLocation(),
+    return StreamBuilder(
+      stream: getAllEvents(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return MapWidget(

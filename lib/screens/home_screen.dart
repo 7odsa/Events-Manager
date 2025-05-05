@@ -1,3 +1,4 @@
+import 'package:events_manager/functions/func.dart';
 import 'package:events_manager/main.dart';
 import 'package:events_manager/models/category.dart';
 import 'package:events_manager/models/event.dart';
@@ -25,6 +26,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    if (UserDM.currentUser!.areaName == null) {
+      getCurrentLocation(
+        onLocationRetrieved: () {
+          setState(() {});
+        },
+      );
+    }
   }
 
   @override
@@ -99,9 +107,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                         SizedBox(width: 4),
                         // TODO
-                        Text("data", style: white20),
+                        Text(
+                          UserDM.currentUser!.areaName ?? "Loading",
+                          style: white20,
+                        ),
                         SizedBox(width: 4),
-                        Text(",data", style: white20),
+                        Text(
+                          " ,${UserDM.currentUser!.areaName ?? " ,Loading"}",
+                          style: white20,
+                        ),
                       ],
                     ),
                   ],

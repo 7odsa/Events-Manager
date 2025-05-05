@@ -1,5 +1,4 @@
 import 'package:events_manager/main.dart';
-import 'package:events_manager/screens/home_screen.dart';
 import 'package:events_manager/screens/register_screen.dart';
 import 'package:events_manager/screens/route_screen.dart';
 import 'package:events_manager/services/auth_service.dart';
