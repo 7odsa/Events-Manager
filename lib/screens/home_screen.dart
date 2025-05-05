@@ -2,7 +2,6 @@ import 'package:events_manager/main.dart';
 import 'package:events_manager/models/category.dart';
 import 'package:events_manager/models/event.dart';
 import 'package:events_manager/models/user_dm.dart';
-import 'package:events_manager/providers/filteredEventsProvider.dart';
 import 'package:events_manager/services/firestore_helpers.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
@@ -21,14 +20,11 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   final List<CategoryDM> categoriesList = CategoryDM.allCategoriesList();
+  CategoryDM selectedCategory = CategoryDM.allCategoriesList()[0];
 
   @override
   void initState() {
     super.initState();
-  }
-
-  void onCategoryTap({required CategoryDM category}) {
-    ref.read(selectedCategoryProvider.notifier).state = category;
   }
 
   @override
@@ -47,7 +43,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 if (!snapshot.hasData) {
                   return Center(child: CircularProgressIndicator());
                 }
-                return EventsListWidget(eventList: snapshot.data ?? []);
+                List<Event> events = snapshot.data ?? [];
+                if (selectedCategory != CategoryDM.all) {
+                  events =
+                      events
+                          .where(
+                            (element) => element.category == selectedCategory,
+                          )
+                          .toList();
+                }
+
+                return EventsListWidget(eventList: events ?? []);
               },
             ),
           ),
@@ -145,8 +151,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   SizedBox categoryList() {
-    final selectedCategory = ref.watch(selectedCategoryProvider);
-
     return SizedBox(
       width: double.infinity,
       height: 34,
@@ -157,7 +161,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           return CategoryItem(
             category: categoriesList[index],
             ontap: () {
-              onCategoryTap(category: categoriesList[index]);
+              // TODO Maybe
+              selectedCategory = categoriesList[index];
+              setState(() {});
             },
             isSelected: categoriesList[index] == selectedCategory,
           );

@@ -38,6 +38,18 @@ Future<void> getEvent(String id) async {}
 
 Future<void> updateEvent(Event event) async {}
 
+Future<void> addUserToEventFavorite(Event event) async {
+  await FirebaseFirestore.instance.collection('events').doc(event.eventID).set({
+    'favoritesUsersIds': FieldValue.arrayUnion([UserDM.currentUser!.id]),
+  }, SetOptions(merge: true));
+}
+
+Future<void> removeUserToEventFavorite(Event event) async {
+  await FirebaseFirestore.instance.collection('events').doc(event.eventID).set({
+    'favoritesUsersIds': FieldValue.arrayRemove([UserDM.currentUser!.id]),
+  }, SetOptions(merge: true));
+}
+
 Stream<List<Event>> getAllEvents() {
   // ! NEED TO FIX (NOT WORKING)
   var db = FirebaseFirestore.instance;
@@ -46,7 +58,7 @@ Stream<List<Event>> getAllEvents() {
 
   final Stream<List<Event>> e = collectionRef.snapshots().map(
     (snapshot) =>
-        snapshot.docs.map((doc) => Event.fromJson(doc.data())).toList(),
+        snapshot.docs.map((doc) => Event.fromJson(doc.id, doc.data())).toList(),
   );
   return e;
 }

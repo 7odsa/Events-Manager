@@ -1,7 +1,6 @@
 import 'package:events_manager/models/category.dart';
 import 'package:events_manager/models/event.dart';
 import 'package:events_manager/models/user_dm.dart';
-import 'package:events_manager/providers/event_provider.dart';
 import 'package:events_manager/services/firestore_helpers.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';

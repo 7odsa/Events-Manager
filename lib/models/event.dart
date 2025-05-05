@@ -5,6 +5,7 @@ import 'package:latlong2/latlong.dart';
 
 class Event {
   Event({
+    this.eventID,
     required this.title,
     required this.description,
     required this.date,
@@ -13,7 +14,7 @@ class Event {
     this.favoritesUsersIds = const [],
     required this.createdBy,
   });
-
+  late final String? eventID;
   late final String title;
   late final String? description;
   late final DateTime date;
@@ -22,7 +23,8 @@ class Event {
   late final List<String> favoritesUsersIds;
   late final String createdBy;
 
-  Event.fromJson(Map<String, dynamic> json) {
+  Event.fromJson(String id, Map<String, dynamic> json) {
+    eventID = id;
     title = json["title"];
     description = json["description"];
 
