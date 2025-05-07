@@ -16,12 +16,14 @@ dependencies:
   flutter_riverpod: ^2.6.1
   dropdown_button2: ^2.3.9
 
-  latlong2: ^0.9.1
-  geocoding: ^3.0.0
-  flutter_map: ^8.1.1
   location: ^8.0.0
   cloud_firestore: ^5.6.7
-  
+  flutter_localizations:
+    sdk: flutter  
+  intl: any
+  google_maps_flutter: ^2.12.1
+  http: ^1.4.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

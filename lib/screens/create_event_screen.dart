@@ -5,9 +5,11 @@ import 'package:events_manager/services/firestore_helpers.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
 import 'package:events_manager/widgets/custom_text_field.dart';
+import 'package:events_manager/widgets/map_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class CreateEventScreen extends ConsumerStatefulWidget {
   const CreateEventScreen({super.key, required this.categories});
@@ -82,10 +84,8 @@ class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
           if (titleController.text.isEmpty ||
               descriptionController.text.isEmpty ||
               date == null ||
-              time == null
-          // TODO: When the logic is done
-          //  || location == null
-          ) {
+              time == null ||
+              location == null) {
             return;
           }
           date = date!.copyWith(hour: time!.hour, minute: time!.minute);
@@ -121,7 +121,19 @@ class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
   InkWell locationLayer() {
     return InkWell(
       onTap: () async {
-        // TODO
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) => MapSample(
+                  location: location,
+                  onPop: (selectedLocation) {
+                    location = selectedLocation;
+                    setState(() {});
+                  },
+                ),
+          ),
+        );
       },
       child: Container(
         padding: EdgeInsets.all(8),
@@ -145,8 +157,17 @@ class _CreateEventScreenState extends ConsumerState<CreateEventScreen> {
               ),
             ),
             SizedBox(width: 8),
-            // TODO
-            Text("data ,Test", style: blue20),
+            Flexible(
+              child: Text(
+                location != null
+                    ?
+                    // TODO : replace with the geocode location info
+                    "${location!.longitude} ,${location!.longitude}"
+                    : "set Location",
+                style: blue20,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
             Spacer(),
             Icon(Icons.arrow_forward_ios_rounded, color: seedColor),
           ],

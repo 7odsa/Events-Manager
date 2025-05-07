@@ -1,7 +1,12 @@
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UserDM {
-  static UserDM? currentUser;
+  // ! Only For Now
+  static UserDM? currentUser = UserDM(
+    email: 'M@M',
+    name: 'M',
+    favoriteEvents: [],
+  );
   UserDM({
     this.id,
     required this.email,

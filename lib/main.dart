@@ -43,7 +43,17 @@ class MainApp extends StatelessWidget {
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
       home: LoginScreen(),
-      // home: LoginScreen(),
+      // localizationsDelegates: [
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      // ],
+      // supportedLocales: [Locale('en', ""), Locale('ar', "")],
+      // localeResolutionCallback: (locale, supportedLocales) {
+      //   if (locale != null) {
+      //     for (var locale in supportedLocales) {}
+      //   }
+      //   return supportedLocales.first;
+      // },
     );
   }
 }

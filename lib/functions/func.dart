@@ -1,11 +1,8 @@
 import 'package:events_manager/models/user_dm.dart';
-import 'package:geocoding/geocoding.dart' as geo;
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-Future<void> getCurrentLocation({
-  required void Function()? onLocationRetrieved,
-}) async {
+Future<void> getCurrentLocation() async {
   Location location = Location();
 
   bool _serviceEnabled;
@@ -29,18 +26,8 @@ Future<void> getCurrentLocation({
   }
 
   _locationData = await location.getLocation();
-
-  List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(
-    _locationData.latitude!,
-    _locationData.longitude!,
-  );
   UserDM.currentUser!.currentLocation = LatLng(
     _locationData.latitude!,
     _locationData.longitude!,
   );
-
-  UserDM.currentUser!.countryName = placemarks[0].country!;
-  UserDM.currentUser!.areaName = placemarks[0].administrativeArea!;
-
-  onLocationRetrieved?.call();
 }

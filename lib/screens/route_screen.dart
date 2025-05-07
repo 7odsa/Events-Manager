@@ -1,11 +1,10 @@
-import 'package:events_manager/functions/func.dart';
 import 'package:events_manager/models/category.dart';
 import 'package:events_manager/screens/create_event_screen.dart';
 import 'package:events_manager/screens/favorite_events_screen.dart';
 import 'package:events_manager/screens/home_screen.dart';
-import 'package:events_manager/screens/map_screen.dart';
 import 'package:events_manager/screens/profile&setting_screen.dart';
 import 'package:events_manager/utils.dart';
+import 'package:events_manager/widgets/map_widget.dart';
 import 'package:flutter/material.dart';
 
 class RouteScreen extends StatefulWidget {
@@ -20,13 +19,13 @@ class _RouteScreenState extends State<RouteScreen> {
 
   final List<Widget> screensList = [
     HomeScreen(),
-    MapScreen(),
-    // TODO: creating map screen
+    MapSample(),
     FavoriteEventsScreen(),
     ProfileAndSettingScreen(),
   ];
   late Widget selectedItem;
   IconData? selectedIcon;
+
   @override
   void initState() {
     selectedItem = screensList[0];

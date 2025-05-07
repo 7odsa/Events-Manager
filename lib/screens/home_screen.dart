@@ -1,8 +1,8 @@
-import 'package:events_manager/functions/func.dart';
 import 'package:events_manager/main.dart';
 import 'package:events_manager/models/category.dart';
 import 'package:events_manager/models/event.dart';
 import 'package:events_manager/models/user_dm.dart';
+import 'package:events_manager/providers/location_provider.dart';
 import 'package:events_manager/services/firestore_helpers.dart';
 import 'package:events_manager/utils.dart';
 import 'package:events_manager/widgets/category_item.dart';
@@ -26,17 +26,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    if (UserDM.currentUser!.areaName == null) {
-      getCurrentLocation(
-        onLocationRetrieved: () {
-          setState(() {});
-        },
-      );
-    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (ref.read(locationProvider) == null) {
+      ref.read(locationProvider.notifier).getLocaiton();
+    }
+    final location = ref.watch(locationProvider);
+    final areaName = UserDM.currentUser!.areaName;
+    final country = UserDM.currentUser!.countryName;
+
     return Scaffold(
       body: Column(
         children: [
@@ -106,7 +106,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           color: colorScheme.primaryContainer,
                         ),
                         SizedBox(width: 4),
-                        // TODO
                         Text(
                           UserDM.currentUser!.areaName ?? "Loading",
                           style: white20,

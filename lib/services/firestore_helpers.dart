@@ -51,7 +51,6 @@ Future<void> removeUserToEventFavorite(Event event) async {
 }
 
 Stream<List<Event>> getAllEvents() {
-  // ! NEED TO FIX (NOT WORKING)
   var db = FirebaseFirestore.instance;
 
   var collectionRef = db.collection("events");
